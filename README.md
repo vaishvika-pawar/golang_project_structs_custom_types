@@ -1,0 +1,1 @@
+# golang_project_structs_custom_types
