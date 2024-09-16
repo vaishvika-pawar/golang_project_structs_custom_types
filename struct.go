@@ -1,56 +1,34 @@
 package main
 
 import (
-	"errors"
 	"fmt"
-	"time"
+
+	"magicosmica.com/golang_project_struct_custom_types/user"
 )
-
-type user struct {
-	firstName string
-	lastName  string
-	birthDate string
-	createdAt time.Time
-}
-
-func (u *user) outputUserDetails() {
-	fmt.Println(u.firstName, u.lastName, u.birthDate)
-}
-
-func (u *user) clearUserName() {
-	u.firstName = ""
-	u.lastName = ""
-}
-
-func newUser(firstName, lastName, birthDate string) (*user, error) {
-	if firstName == "" || lastName == "" || birthDate == "" {
-		return nil, errors.New("First name, last name and birth date are required!")
-	}
-	return &user{
-		firstName: firstName,
-		lastName:  lastName,
-		birthDate: birthDate,
-		createdAt: time.Now(),
-	}, nil
-}
 
 func main() {
 	userFirstName := getUserData("Please enter your first name: ")
 	userLastName := getUserData("Please enter your last name: ")
 	userBirthDate := getUserData("Please eneter your birthdate (MM/DD/YYYY): ")
 
-	var appUser *user
+	var appUser *user.User
 
-	appUser, err := newUser(userFirstName, userLastName, userBirthDate)
+	appUser, err := user.NewUser(userFirstName, userLastName, userBirthDate)
 
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	appUser.outputUserDetails()
-	appUser.clearUserName()
-	appUser.outputUserDetails()
+	admin := user.NewAdmin("test@example.com", "test123")
+
+	admin.OutputUserDetails()
+	admin.ClearUserName()
+	admin.OutputUserDetails()
+
+	appUser.OutputUserDetails()
+	appUser.ClearUserName()
+	appUser.OutputUserDetails()
 }
 
 func getUserData(promptText string) string {
